@@ -378,8 +378,7 @@ def _apply_defaults(config: dict, path: str) -> dict:
     # decided to set defaults that make it easy to get started with sensible
     # Markdown support, but users can override this as needed.
     markdown_extensions, mdx_configs = _convert_markdown_extensions(
-        config.get(
-            "markdown_extensions",
+        always_merger.merge(
             {
                 "abbr": {},
                 "admonition": {},
@@ -416,6 +415,7 @@ def _apply_defaults(config: dict, path: str) -> dict:
                 "pymdownx.tasklist": {"custom_checkbox": True},
                 "pymdownx.tilde": {},
             },
+            config.get("markdown_extensions", {}),
         )
     )
     config["markdown_extensions"] = markdown_extensions
